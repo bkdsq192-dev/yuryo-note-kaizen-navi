@@ -37,8 +37,7 @@
           radial-gradient(circle at top left, rgba(132, 193, 255, 0.3), transparent 30%),
           linear-gradient(180deg, #f7fbff 0%, var(--bg) 100%);
         color: var(--text);
-        font-family:
-          "Hiragino Sans", "Yu Gothic UI", "Yu Gothic", "Meiryo", sans-serif;
+        font-family: "Hiragino Sans", "Yu Gothic UI", "Yu Gothic", "Meiryo", sans-serif;
         line-height: 1.7;
         word-break: break-word;
         overflow-wrap: anywhere;
@@ -157,6 +156,10 @@
         gap: 10px;
       }
 
+      .choice-group.compact {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       .choice {
         display: flex;
         align-items: flex-start;
@@ -165,6 +168,7 @@
         border: 1px solid var(--line);
         border-radius: 16px;
         background: #fcfeff;
+        min-width: 0;
       }
 
       .choice input {
@@ -197,6 +201,24 @@
         resize: vertical;
       }
 
+      .collapsible {
+        display: grid;
+        grid-template-rows: 0fr;
+        opacity: 0;
+        transition: grid-template-rows 0.25s ease, opacity 0.25s ease, margin-top 0.25s ease;
+        margin-top: 0;
+      }
+
+      .collapsible.is-visible {
+        grid-template-rows: 1fr;
+        opacity: 1;
+        margin-top: 10px;
+      }
+
+      .collapsible-inner {
+        overflow: hidden;
+      }
+
       .error {
         margin: 8px 0 0;
         color: var(--danger);
@@ -223,10 +245,7 @@
         font: inherit;
         font-weight: 700;
         cursor: pointer;
-        transition:
-          transform 0.18s ease,
-          background-color 0.18s ease,
-          box-shadow 0.18s ease;
+        transition: transform 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
       }
 
       button:hover {
@@ -284,6 +303,7 @@
           padding: 20px;
         }
 
+        .choice-group.compact,
         .action-buttons {
           grid-template-columns: 1fr;
         }
@@ -334,76 +354,107 @@
                 <span>有料note改善ナビ</span>
               </label>
             </div>
-            <p class="error" id="usedToolsError" aria-live="polite"></p>
+            <p class="error" id="usedToolsError" role="alert" aria-live="polite"></p>
           </fieldset>
 
           <fieldset class="field">
             <legend>2．どこまで進められましたか？<span class="required">必須</span></legend>
             <div class="choice-group" id="progressGroup">
-              <label class="choice" for="progress-opened">
-                <input id="progress-opened" name="progress" type="radio" value="開いただけ" />
-                <span>開いただけ</span>
-              </label>
-              <label class="choice" for="progress-example">
-                <input id="progress-example" name="progress" type="radio" value="記入例を確認した" />
-                <span>記入例を確認した</span>
-              </label>
-              <label class="choice" for="progress-partial">
-                <input id="progress-partial" name="progress" type="radio" value="途中まで入力した" />
-                <span>途中まで入力した</span>
-              </label>
-              <label class="choice" for="progress-complete">
-                <input id="progress-complete" name="progress" type="radio" value="最後まで入力した" />
-                <span>最後まで入力した</span>
-              </label>
-              <label class="choice" for="progress-design">
-                <input id="progress-design" name="progress" type="radio" value="結果まとめ、最終設計書まで作成した" />
-                <span>結果まとめ、最終設計書まで作成した</span>
-              </label>
+              <label class="choice" for="progress-opened"><input id="progress-opened" name="progress" type="radio" value="開いただけ" /><span>開いただけ</span></label>
+              <label class="choice" for="progress-example"><input id="progress-example" name="progress" type="radio" value="記入例を確認した" /><span>記入例を確認した</span></label>
+              <label class="choice" for="progress-partial"><input id="progress-partial" name="progress" type="radio" value="途中まで入力した" /><span>途中まで入力した</span></label>
+              <label class="choice" for="progress-complete"><input id="progress-complete" name="progress" type="radio" value="最後まで入力した" /><span>最後まで入力した</span></label>
+              <label class="choice" for="progress-design"><input id="progress-design" name="progress" type="radio" value="結果まとめ、最終設計書まで作成した" /><span>結果まとめ、最終設計書まで作成した</span></label>
             </div>
-            <p class="error" id="progressError" aria-live="polite"></p>
+            <p class="error" id="progressError" role="alert" aria-live="polite"></p>
+          </fieldset>
+
+          <fieldset class="field">
+            <legend>3．一番役立った項目を教えてください<span class="required">必須</span></legend>
+            <div class="choice-group compact" id="mostHelpfulGroup">
+              <label class="choice" for="most-helpful-1"><input id="most-helpful-1" name="mostHelpful" type="radio" value="タイトルの見直し" /><span>タイトルの見直し</span></label>
+              <label class="choice" for="most-helpful-2"><input id="most-helpful-2" name="mostHelpful" type="radio" value="無料部分の見直し" /><span>無料部分の見直し</span></label>
+              <label class="choice" for="most-helpful-3"><input id="most-helpful-3" name="mostHelpful" type="radio" value="有料部分の見直し" /><span>有料部分の見直し</span></label>
+              <label class="choice" for="most-helpful-4"><input id="most-helpful-4" name="mostHelpful" type="radio" value="X・Threads導線の整理" /><span>X・Threads導線の整理</span></label>
+              <label class="choice" for="most-helpful-5"><input id="most-helpful-5" name="mostHelpful" type="radio" value="優先して直す3項目の決定" /><span>優先して直す3項目の決定</span></label>
+              <label class="choice" for="most-helpful-6"><input id="most-helpful-6" name="mostHelpful" type="radio" value="7日間改善計画・最終設計書" /><span>7日間改善計画・最終設計書</span></label>
+              <label class="choice" for="mostHelpfulOtherOption"><input id="mostHelpfulOtherOption" name="mostHelpful" type="radio" value="その他" /><span>その他</span></label>
+            </div>
+            <div id="mostHelpfulOtherWrap" class="collapsible" aria-hidden="true">
+              <div class="collapsible-inner">
+                <label for="mostHelpfulOther">3．一番役立った項目のその他</label>
+                <input id="mostHelpfulOther" name="mostHelpfulOther" type="text" placeholder="その他に役立った項目を入力してください" />
+              </div>
+            </div>
+            <p class="error" id="mostHelpfulError" role="alert" aria-live="polite"></p>
+            <p class="error" id="mostHelpfulOtherError" role="alert" aria-live="polite"></p>
+          </fieldset>
+
+          <fieldset class="field">
+            <legend>4．入力に迷った項目、分かりにくかった部分はありましたか？</legend>
+            <div class="choice-group compact" id="confusingGroup">
+              <label class="choice" for="confusing-1"><input id="confusing-1" name="confusingParts" type="checkbox" value="どこから始めればよいか分かりにくかった" /><span>どこから始めればよいか分かりにくかった</span></label>
+              <label class="choice" for="confusing-2"><input id="confusing-2" name="confusingParts" type="checkbox" value="「明確・一部・未記入」の判定に迷った" /><span>「明確・一部・未記入」の判定に迷った</span></label>
+              <label class="choice" for="confusing-3"><input id="confusing-3" name="confusingParts" type="checkbox" value="「根拠・現状」に何を書くか迷った" /><span>「根拠・現状」に何を書くか迷った</span></label>
+              <label class="choice" for="confusing-4"><input id="confusing-4" name="confusingParts" type="checkbox" value="「次に直すこと」に何を書くか迷った" /><span>「次に直すこと」に何を書くか迷った</span></label>
+              <label class="choice" for="confusing-5"><input id="confusing-5" name="confusingParts" type="checkbox" value="優先して直す3項目の選び方に迷った" /><span>優先して直す3項目の選び方に迷った</span></label>
+              <label class="choice" for="confusing-6"><input id="confusing-6" name="confusingParts" type="checkbox" value="保存・JSON書き出し・別端末への移行が分かりにくかった" /><span>保存・JSON書き出し・別端末への移行が分かりにくかった</span></label>
+              <label class="choice" for="confusing-other"><input id="confusing-other" name="confusingParts" type="checkbox" value="その他" /><span>その他</span></label>
+              <label class="choice" for="confusing-none"><input id="confusing-none" name="confusingParts" type="checkbox" value="特に迷わなかった" /><span>特に迷わなかった</span></label>
+            </div>
+            <div id="confusingOtherWrap" class="collapsible" aria-hidden="true">
+              <div class="collapsible-inner">
+                <label for="confusingOther">4．分かりにくかった部分のその他</label>
+                <input id="confusingOther" name="confusingOther" type="text" placeholder="分かりにくかった部分を具体的に入力してください" />
+              </div>
+            </div>
+            <p class="error" id="confusingPartsOtherError" role="alert" aria-live="polite"></p>
+          </fieldset>
+
+          <fieldset class="field">
+            <legend>5．次のツールに欲しい機能を教えてください</legend>
+            <p class="subtext">次は「自分の経験と知識を、note記事の設計図に変えるツール」を開発予定です。</p>
+            <div class="choice-group compact" id="wantedFeaturesGroup">
+              <label class="choice" for="wanted-1"><input id="wanted-1" name="wantedFeatures" type="checkbox" value="自分の経験・知識を棚卸しする機能" /><span>自分の経験・知識を棚卸しする機能</span></label>
+              <label class="choice" for="wanted-2"><input id="wanted-2" name="wantedFeatures" type="checkbox" value="読者と悩みを整理する機能" /><span>読者と悩みを整理する機能</span></label>
+              <label class="choice" for="wanted-3"><input id="wanted-3" name="wantedFeatures" type="checkbox" value="noteのタイトル案を複数作る機能" /><span>noteのタイトル案を複数作る機能</span></label>
+              <label class="choice" for="wanted-4"><input id="wanted-4" name="wantedFeatures" type="checkbox" value="見出し構成・記事の設計図を作る機能" /><span>見出し構成・記事の設計図を作る機能</span></label>
+              <label class="choice" for="wanted-5"><input id="wanted-5" name="wantedFeatures" type="checkbox" value="ChatGPTへ貼り付ける原稿作成プロンプトを作る機能" /><span>ChatGPTへ貼り付ける原稿作成プロンプトを作る機能</span></label>
+              <label class="choice" for="wanted-6"><input id="wanted-6" name="wantedFeatures" type="checkbox" value="X・Threadsの紹介投稿案を作る機能" /><span>X・Threadsの紹介投稿案を作る機能</span></label>
+              <label class="choice" for="wanted-other"><input id="wanted-other" name="wantedFeatures" type="checkbox" value="その他" /><span>その他</span></label>
+            </div>
+            <div id="wantedOtherWrap" class="collapsible" aria-hidden="true">
+              <div class="collapsible-inner">
+                <label for="wantedOther">5．次のツールに欲しい機能のその他</label>
+                <input id="wantedOther" name="wantedOther" type="text" placeholder="次のツールに欲しい機能を入力してください" />
+              </div>
+            </div>
+            <p class="error" id="wantedFeaturesOtherError" role="alert" aria-live="polite"></p>
           </fieldset>
 
           <div class="field">
-            <label for="mostHelpful">3．一番役立った項目を教えてください<span class="required">必須</span></label>
-            <p class="subtext">記入例: 優先して直す3項目を決められたこと。何から手をつけるか整理できました。</p>
-            <textarea id="mostHelpful" name="mostHelpful"></textarea>
-            <p class="error" id="mostHelpfulError" aria-live="polite"></p>
-          </div>
-
-          <div class="field">
-            <label for="confusingParts">4．入力に迷った項目、分かりにくかった部分はありましたか？</label>
-            <textarea id="confusingParts" name="confusingParts"></textarea>
-          </div>
-
-          <div class="field">
-            <label for="wantedFeatures">5．次のツールに欲しい機能を教えてください</label>
-            <p class="subtext">次は「自分の経験と知識を、note記事の設計図に変えるツール」を検討しています。</p>
-            <textarea id="wantedFeatures" name="wantedFeatures"></textarea>
+            <label for="comment">6．実際に使ってみた感想を、自由にお書きください</label>
+            <p class="subtext">短い感想でも構いません。「途中で止まった」「スマホで使いやすかった」など、率直な内容を教えてください。</p>
+            <textarea id="comment" name="comment" placeholder="例：記入例があったので、何を書けばよいか分かりました。優先して直す項目を3つに絞れたことが特に役立ちました。"></textarea>
+            <p class="error" id="commentError" role="alert" aria-live="polite"></p>
           </div>
 
           <fieldset class="field">
-            <legend>6．感想を今後の記事で紹介してもよいですか？<span class="required">必須</span></legend>
+            <legend>7．感想を今後の記事で紹介してもよいですか？<span class="required">必須</span></legend>
             <div class="choice-group" id="publicationPermissionGroup">
-              <label class="choice" for="permission-ok">
-                <input id="permission-ok" name="publicationPermission" type="radio" value="匿名なら掲載してよい" />
-                <span>匿名なら掲載してよい</span>
-              </label>
-              <label class="choice" for="permission-no">
-                <input id="permission-no" name="publicationPermission" type="radio" value="掲載しないでほしい" />
-                <span>掲載しないでほしい</span>
-              </label>
+              <label class="choice" for="permission-ok"><input id="permission-ok" name="publicationPermission" type="radio" value="匿名なら掲載してよい" /><span>匿名なら掲載してよい</span></label>
+              <label class="choice" for="permission-no"><input id="permission-no" name="publicationPermission" type="radio" value="掲載しないでほしい" /><span>掲載しないでほしい</span></label>
             </div>
-            <p class="error" id="publicationPermissionError" aria-live="polite"></p>
+            <p class="error" id="publicationPermissionError" role="alert" aria-live="polite"></p>
           </fieldset>
 
           <div class="field">
-            <label for="name">7．お名前・ハンドルネーム</label>
+            <label for="name">8．お名前・ハンドルネーム</label>
             <input id="name" name="name" type="text" autocomplete="name" />
           </div>
 
           <div class="field">
-            <label for="email">8．返信先メールアドレス</label>
+            <label for="email">9．返信先メールアドレス</label>
             <input id="email" name="email" type="email" autocomplete="email" inputmode="email" />
           </div>
 
@@ -418,14 +469,13 @@
         </form>
       </section>
 
-      <p class="footer">
-        <a href="./">有料note改善ナビに戻る</a>
-      </p>
+      <p class="footer"><a href="./">有料note改善ナビに戻る</a></p>
     </main>
 
     <script>
       const FEEDBACK_EMAIL = "bkdsq192@gmail.com";
       const FEEDBACK_SUBJECT = "無料ツールの感想｜有料note改善ナビ";
+      const CONFUSING_NONE_OPTION = "特に迷わなかった";
 
       const form = document.getElementById("feedbackForm");
       const actionStatus = document.getElementById("actionStatus");
@@ -433,27 +483,57 @@
         usedTools: document.getElementById("usedToolsError"),
         progress: document.getElementById("progressError"),
         mostHelpful: document.getElementById("mostHelpfulError"),
+        mostHelpfulOther: document.getElementById("mostHelpfulOtherError"),
+        confusingPartsOther: document.getElementById("confusingPartsOtherError"),
+        wantedFeaturesOther: document.getElementById("wantedFeaturesOtherError"),
+        comment: document.getElementById("commentError"),
         publicationPermission: document.getElementById("publicationPermissionError"),
       };
+
+      const mostHelpfulOtherWrap = document.getElementById("mostHelpfulOtherWrap");
+      const confusingOtherWrap = document.getElementById("confusingOtherWrap");
+      const wantedOtherWrap = document.getElementById("wantedOtherWrap");
+      const mostHelpfulOtherInput = document.getElementById("mostHelpfulOther");
+      const confusingOtherInput = document.getElementById("confusingOther");
+      const wantedOtherInput = document.getElementById("wantedOther");
+      const commentInput = document.getElementById("comment");
+      const nameInput = document.getElementById("name");
+      const emailInput = document.getElementById("email");
 
       function clean(value) {
         return typeof value === "string" ? value.trim() : "";
       }
 
-      function getValues() {
-        const usedTools = Array.from(form.querySelectorAll('input[name="usedTools"]:checked')).map((input) => input.value);
-        const progress = form.querySelector('input[name="progress"]:checked')?.value || "";
-        const publicationPermission = form.querySelector('input[name="publicationPermission"]:checked')?.value || "";
+      function unique(values) {
+        return [...new Set(values.filter((value) => clean(value)))];
+      }
 
+      function normalizeExclusiveOption(values, exclusiveOption) {
+        const normalized = unique(values);
+        if (normalized.includes(exclusiveOption)) {
+          return [exclusiveOption];
+        }
+        return normalized;
+      }
+
+      function getCheckedValues(name) {
+        return Array.from(form.querySelectorAll(`input[name="${name}"]:checked`)).map((input) => input.value);
+      }
+
+      function getValues() {
         return {
-          usedTools,
-          progress,
-          mostHelpful: form.mostHelpful.value,
-          confusingParts: form.confusingParts.value,
-          wantedFeatures: form.wantedFeatures.value,
-          publicationPermission,
-          name: form.name.value,
-          email: form.email.value,
+          usedTools: getCheckedValues("usedTools"),
+          progress: form.querySelector('input[name="progress"]:checked')?.value || "",
+          mostHelpful: form.querySelector('input[name="mostHelpful"]:checked')?.value || "",
+          mostHelpfulOther: mostHelpfulOtherInput.value,
+          confusingParts: getCheckedValues("confusingParts"),
+          confusingPartsOther: confusingOtherInput.value,
+          wantedFeatures: getCheckedValues("wantedFeatures"),
+          wantedFeaturesOther: wantedOtherInput.value,
+          comment: commentInput.value,
+          publicationPermission: form.querySelector('input[name="publicationPermission"]:checked')?.value || "",
+          name: nameInput.value,
+          email: emailInput.value,
         };
       }
 
@@ -463,17 +543,26 @@
         if (values.usedTools.length === 0) {
           errors.usedTools = "使ったツールを1つ以上選んでください。";
         }
-
         if (!clean(values.progress)) {
           errors.progress = "どこまで進められたかを選んでください。";
         }
-
         if (!clean(values.mostHelpful)) {
-          errors.mostHelpful = "一番役立った項目を入力してください。";
+          errors.mostHelpful = "一番役立った項目を選んでください。";
         }
-
+        if (values.mostHelpful === "その他" && !clean(values.mostHelpfulOther)) {
+          errors.mostHelpfulOther = "その他に役立った項目を入力してください。";
+        }
+        if (unique(values.confusingParts).includes("その他") && !clean(values.confusingPartsOther)) {
+          errors.confusingPartsOther = "分かりにくかった部分を具体的に入力してください。";
+        }
+        if (unique(values.wantedFeatures).includes("その他") && !clean(values.wantedFeaturesOther)) {
+          errors.wantedFeaturesOther = "次のツールに欲しい機能を入力してください。";
+        }
         if (!clean(values.publicationPermission)) {
           errors.publicationPermission = "感想の掲載可否を選んでください。";
+        }
+        if (values.publicationPermission === "匿名なら掲載してよい" && !clean(values.comment)) {
+          errors.comment = "記事で紹介できる感想を入力してください。";
         }
 
         return {
@@ -482,41 +571,54 @@
         };
       }
 
-      function fillOptional(value) {
-        return clean(value) || "特になし";
+      function formatOtherAwareSingle(selected, otherText) {
+        if (!clean(selected)) return "特になし";
+        if (selected === "その他") return `その他：${clean(otherText) || "未記入"}`;
+        return selected;
       }
 
-      function fillOptionalIdentity(value) {
-        return clean(value) || "未記入";
+      function formatOtherAwareMultiple(selectedValues, otherText, exclusiveOption) {
+        const normalized = exclusiveOption ? normalizeExclusiveOption(selectedValues, exclusiveOption) : unique(selectedValues);
+        if (normalized.length === 0) return "特になし";
+        return normalized.map((value) => (value === "その他" ? `その他：${clean(otherText) || "未記入"}` : value)).join("\n");
+      }
+
+      function formatIdentity(values) {
+        if (clean(values.name)) return clean(values.name);
+        if (values.publicationPermission === "匿名なら掲載してよい") return "匿名";
+        return "未記入";
       }
 
       function buildBody(values) {
         return [
-          "無料ツールの感想",
+          "無料ツール感想フォーム",
           "",
-          "【使ったツール】",
-          values.usedTools.join(" / "),
+          "1．使ったツール",
+          unique(values.usedTools).join("\n") || "特になし",
           "",
-          "【どこまで進められましたか】",
-          clean(values.progress),
+          "2．進捗",
+          clean(values.progress) || "未記入",
           "",
-          "【一番役立った項目】",
-          clean(values.mostHelpful),
+          "3．一番役立った項目",
+          formatOtherAwareSingle(values.mostHelpful, values.mostHelpfulOther),
           "",
-          "【入力に迷った項目、分かりにくかった部分】",
-          fillOptional(values.confusingParts),
+          "4．入力に迷った項目・分かりにくかった部分",
+          formatOtherAwareMultiple(values.confusingParts, values.confusingPartsOther, CONFUSING_NONE_OPTION),
           "",
-          "【次のツールに欲しい機能】",
-          fillOptional(values.wantedFeatures),
+          "5．次のツールに欲しい機能",
+          formatOtherAwareMultiple(values.wantedFeatures, values.wantedFeaturesOther),
           "",
-          "【感想を今後の記事で紹介してよいか】",
-          clean(values.publicationPermission),
+          "6．実際に使ってみた感想",
+          clean(values.comment) || "特になし",
           "",
-          "【お名前・ハンドルネーム】",
-          fillOptionalIdentity(values.name),
+          "7．感想の掲載可否",
+          clean(values.publicationPermission) || "未記入",
           "",
-          "【返信先メールアドレス】",
-          fillOptionalIdentity(values.email),
+          "8．お名前・ハンドルネーム",
+          formatIdentity(values),
+          "",
+          "9．返信先メールアドレス",
+          clean(values.email) || "未記入",
         ].join("\n");
       }
 
@@ -528,7 +630,6 @@
           su: FEEDBACK_SUBJECT,
           body: buildBody(values),
         });
-
         return `https://mail.google.com/mail/?${params.toString()}`;
       }
 
@@ -537,7 +638,6 @@
           subject: FEEDBACK_SUBJECT,
           body: buildBody(values),
         });
-
         return `mailto:${FEEDBACK_EMAIL}?${params.toString()}`;
       }
 
@@ -550,30 +650,54 @@
       function setActionStatus(message, type) {
         actionStatus.textContent = message;
         actionStatus.className = "status-box";
-        if (type === "error") {
-          actionStatus.classList.add("is-error");
+        if (type === "error") actionStatus.classList.add("is-error");
+        if (type === "success") actionStatus.classList.add("is-success");
+      }
+
+      function setCollapsibleVisible(element, isVisible) {
+        element.classList.toggle("is-visible", isVisible);
+        element.setAttribute("aria-hidden", String(!isVisible));
+      }
+
+      function syncConditionalFields(options = {}) {
+        const { focusMostHelpfulOther = false, focusConfusingOther = false, focusWantedOther = false } = options;
+        const mostHelpfulIsOther = document.getElementById("mostHelpfulOtherOption").checked;
+        const confusingIsOther = document.getElementById("confusing-other").checked;
+        const wantedIsOther = document.getElementById("wanted-other").checked;
+
+        setCollapsibleVisible(mostHelpfulOtherWrap, mostHelpfulIsOther);
+        setCollapsibleVisible(confusingOtherWrap, confusingIsOther);
+        setCollapsibleVisible(wantedOtherWrap, wantedIsOther);
+
+        if (focusMostHelpfulOther && mostHelpfulIsOther) mostHelpfulOtherInput.focus();
+        if (focusConfusingOther && confusingIsOther) confusingOtherInput.focus();
+        if (focusWantedOther && wantedIsOther) wantedOtherInput.focus();
+      }
+
+      function handleConfusingExclusive(target) {
+        const noneCheckbox = document.getElementById("confusing-none");
+        const otherCheckboxes = Array.from(form.querySelectorAll('input[name="confusingParts"]')).filter((input) => input !== noneCheckbox);
+
+        if (target === noneCheckbox && noneCheckbox.checked) {
+          otherCheckboxes.forEach((input) => {
+            input.checked = false;
+          });
         }
-        if (type === "success") {
-          actionStatus.classList.add("is-success");
+
+        if (target !== noneCheckbox && target.checked) {
+          noneCheckbox.checked = false;
         }
       }
 
       function focusFirstError(errors) {
-        if (errors.usedTools) {
-          document.getElementById("tool-sheet").focus();
-          return;
-        }
-        if (errors.progress) {
-          document.getElementById("progress-opened").focus();
-          return;
-        }
-        if (errors.mostHelpful) {
-          document.getElementById("mostHelpful").focus();
-          return;
-        }
-        if (errors.publicationPermission) {
-          document.getElementById("permission-ok").focus();
-        }
+        if (errors.usedTools) return document.getElementById("tool-sheet").focus();
+        if (errors.progress) return document.getElementById("progress-opened").focus();
+        if (errors.mostHelpful) return document.getElementById("most-helpful-1").focus();
+        if (errors.mostHelpfulOther) return mostHelpfulOtherInput.focus();
+        if (errors.confusingPartsOther) return confusingOtherInput.focus();
+        if (errors.wantedFeaturesOther) return wantedOtherInput.focus();
+        if (errors.comment) return commentInput.focus();
+        if (errors.publicationPermission) return document.getElementById("permission-ok").focus();
       }
 
       function ensureValidValues() {
@@ -582,7 +706,8 @@
         renderErrors(result.errors);
 
         if (!result.isValid) {
-          setActionStatus("必須項目を入力してから操作してください。", "error");
+          setActionStatus("必須項目や入力内容を確認してから操作してください。", "error");
+          syncConditionalFields();
           focusFirstError(result.errors);
           return null;
         }
@@ -596,7 +721,6 @@
           await navigator.clipboard.writeText(text);
           return;
         }
-
         const helper = document.createElement("textarea");
         helper.value = text;
         helper.setAttribute("readonly", "");
@@ -607,6 +731,25 @@
         document.execCommand("copy");
         document.body.removeChild(helper);
       }
+
+      document.querySelectorAll('input[name="mostHelpful"]').forEach((input) => {
+        input.addEventListener("change", (event) => {
+          syncConditionalFields({ focusMostHelpfulOther: event.target.value === "その他" });
+        });
+      });
+
+      document.querySelectorAll('input[name="confusingParts"]').forEach((input) => {
+        input.addEventListener("change", (event) => {
+          handleConfusingExclusive(event.target);
+          syncConditionalFields({ focusConfusingOther: event.target.id === "confusing-other" && event.target.checked });
+        });
+      });
+
+      document.querySelectorAll('input[name="wantedFeatures"]').forEach((input) => {
+        input.addEventListener("change", (event) => {
+          syncConditionalFields({ focusWantedOther: event.target.id === "wanted-other" && event.target.checked });
+        });
+      });
 
       document.getElementById("gmailButton").addEventListener("click", () => {
         const values = ensureValidValues();
@@ -623,7 +766,6 @@
       document.getElementById("copyButton").addEventListener("click", async () => {
         const values = ensureValidValues();
         if (!values) return;
-
         try {
           await copyToClipboard(buildBody(values));
           setActionStatus("回答内容をコピーしました。メール本文の下書きにもそのまま貼り付けられます。", "success");
@@ -636,6 +778,10 @@
         renderErrors({});
         setActionStatus("", "");
       });
+
+      syncConditionalFields();
     </script>
   </body>
 </html>
+
+
