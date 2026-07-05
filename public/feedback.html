@@ -1,0 +1,641 @@
+﻿<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>無料ツール感想フォーム | 有料note改善ナビ</title>
+    <meta
+      name="description"
+      content="有料note改善・実践スプレッドシートと有料note改善ナビを使った感想を送るためのフォームです。"
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f3f9ff;
+        --card: #ffffff;
+        --line: #cfe1f5;
+        --line-strong: #8fb5db;
+        --text: #18324b;
+        --muted: #4b647c;
+        --primary: #1f6fb8;
+        --primary-strong: #175b98;
+        --primary-soft: #e7f2ff;
+        --danger: #b43b4f;
+        --danger-soft: #fff1f4;
+        --shadow: 0 18px 40px rgba(31, 70, 110, 0.08);
+        --radius: 20px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        background:
+          radial-gradient(circle at top left, rgba(132, 193, 255, 0.3), transparent 30%),
+          linear-gradient(180deg, #f7fbff 0%, var(--bg) 100%);
+        color: var(--text);
+        font-family:
+          "Hiragino Sans", "Yu Gothic UI", "Yu Gothic", "Meiryo", sans-serif;
+        line-height: 1.7;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+      }
+
+      a {
+        color: var(--primary-strong);
+      }
+
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      textarea:focus-visible {
+        outline: 3px solid rgba(31, 111, 184, 0.35);
+        outline-offset: 2px;
+      }
+
+      .page {
+        width: min(100%, 960px);
+        margin: 0 auto;
+        padding: 24px 16px 48px;
+      }
+
+      .hero,
+      .card {
+        background: rgba(255, 255, 255, 0.94);
+        border: 1px solid rgba(207, 225, 245, 0.95);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(6px);
+      }
+
+      .hero {
+        padding: 28px;
+        margin-bottom: 20px;
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--primary);
+        font-size: 0.92rem;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+        line-height: 1.25;
+      }
+
+      .lead {
+        margin: 14px 0 0;
+        color: var(--muted);
+        font-size: 1rem;
+      }
+
+      .notice {
+        margin-top: 18px;
+        padding: 14px 16px;
+        border-radius: 16px;
+        background: var(--primary-soft);
+        border: 1px solid #bfd8f2;
+        font-size: 0.95rem;
+      }
+
+      .card {
+        padding: 24px;
+      }
+
+      form {
+        display: grid;
+        gap: 22px;
+      }
+
+      .section-title {
+        margin: 0 0 14px;
+        font-size: 1.1rem;
+      }
+
+      .field,
+      fieldset {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        min-width: 0;
+      }
+
+      label,
+      legend {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 700;
+      }
+
+      .required {
+        display: inline-block;
+        margin-left: 8px;
+        padding: 2px 8px;
+        border-radius: 999px;
+        background: var(--danger-soft);
+        color: var(--danger);
+        font-size: 0.78rem;
+        font-weight: 700;
+        vertical-align: middle;
+      }
+
+      .subtext {
+        margin: -2px 0 10px;
+        color: var(--muted);
+        font-size: 0.94rem;
+      }
+
+      .choice-group {
+        display: grid;
+        gap: 10px;
+      }
+
+      .choice {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 14px 16px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: #fcfeff;
+      }
+
+      .choice input {
+        width: 20px;
+        height: 20px;
+        margin-top: 2px;
+        accent-color: var(--primary);
+        flex: 0 0 auto;
+      }
+
+      .choice span {
+        flex: 1 1 auto;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      textarea {
+        width: 100%;
+        min-height: 54px;
+        padding: 14px 16px;
+        border: 1px solid var(--line-strong);
+        border-radius: 16px;
+        background: #fff;
+        color: var(--text);
+        font: inherit;
+      }
+
+      textarea {
+        min-height: 140px;
+        resize: vertical;
+      }
+
+      .error {
+        margin: 8px 0 0;
+        color: var(--danger);
+        font-size: 0.92rem;
+        font-weight: 700;
+      }
+
+      .actions {
+        display: grid;
+        gap: 12px;
+      }
+
+      .action-buttons {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      button {
+        min-height: 54px;
+        border: 0;
+        border-radius: 16px;
+        padding: 14px 16px;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+        transition:
+          transform 0.18s ease,
+          background-color 0.18s ease,
+          box-shadow 0.18s ease;
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+      }
+
+      .primary {
+        background: var(--primary);
+        color: #fff;
+        box-shadow: 0 12px 24px rgba(31, 111, 184, 0.22);
+      }
+
+      .primary:hover {
+        background: var(--primary-strong);
+      }
+
+      .secondary {
+        background: #fff;
+        color: var(--primary-strong);
+        border: 1px solid var(--line-strong);
+      }
+
+      .tertiary {
+        background: #eef6ff;
+        color: var(--primary-strong);
+      }
+
+      .status-box {
+        min-height: 28px;
+        padding-top: 2px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .status-box.is-error {
+        color: var(--danger);
+        font-weight: 700;
+      }
+
+      .status-box.is-success {
+        color: #1c6a45;
+        font-weight: 700;
+      }
+
+      .footer {
+        margin-top: 18px;
+        color: var(--muted);
+        font-size: 0.92rem;
+        text-align: center;
+      }
+
+      @media (max-width: 720px) {
+        .hero,
+        .card {
+          padding: 20px;
+        }
+
+        .action-buttons {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .page {
+          padding-inline: 12px;
+        }
+
+        .hero,
+        .card {
+          border-radius: 18px;
+          padding: 18px;
+        }
+
+        .choice {
+          padding: 12px 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero" aria-labelledby="page-title">
+        <p class="eyebrow">無料ツール利用者向けフォーム</p>
+        <h1 id="page-title">無料ツールを使った感想を聞かせてください</h1>
+        <p class="lead">
+          「有料note改善・実践スプレッドシート」と「有料note改善ナビ」を、今後もっと使いやすくするためのフォームです。2〜3分程度で回答できます。
+        </p>
+        <p class="notice">
+          このページでは回答をサーバーに保存しません。入力後にGmailまたはメールアプリが開き、内容を確認してから送信できます。
+        </p>
+      </section>
+
+      <section class="card" aria-labelledby="form-title">
+        <h2 id="form-title" class="section-title">感想フォーム</h2>
+        <form id="feedbackForm" novalidate>
+          <fieldset class="field">
+            <legend>1．どのツールを使いましたか？<span class="required">必須</span></legend>
+            <div class="choice-group" id="usedToolsGroup">
+              <label class="choice" for="tool-sheet">
+                <input id="tool-sheet" name="usedTools" type="checkbox" value="有料note改善・実践スプレッドシート" />
+                <span>有料note改善・実践スプレッドシート</span>
+              </label>
+              <label class="choice" for="tool-navi">
+                <input id="tool-navi" name="usedTools" type="checkbox" value="有料note改善ナビ" />
+                <span>有料note改善ナビ</span>
+              </label>
+            </div>
+            <p class="error" id="usedToolsError" aria-live="polite"></p>
+          </fieldset>
+
+          <fieldset class="field">
+            <legend>2．どこまで進められましたか？<span class="required">必須</span></legend>
+            <div class="choice-group" id="progressGroup">
+              <label class="choice" for="progress-opened">
+                <input id="progress-opened" name="progress" type="radio" value="開いただけ" />
+                <span>開いただけ</span>
+              </label>
+              <label class="choice" for="progress-example">
+                <input id="progress-example" name="progress" type="radio" value="記入例を確認した" />
+                <span>記入例を確認した</span>
+              </label>
+              <label class="choice" for="progress-partial">
+                <input id="progress-partial" name="progress" type="radio" value="途中まで入力した" />
+                <span>途中まで入力した</span>
+              </label>
+              <label class="choice" for="progress-complete">
+                <input id="progress-complete" name="progress" type="radio" value="最後まで入力した" />
+                <span>最後まで入力した</span>
+              </label>
+              <label class="choice" for="progress-design">
+                <input id="progress-design" name="progress" type="radio" value="結果まとめ、最終設計書まで作成した" />
+                <span>結果まとめ、最終設計書まで作成した</span>
+              </label>
+            </div>
+            <p class="error" id="progressError" aria-live="polite"></p>
+          </fieldset>
+
+          <div class="field">
+            <label for="mostHelpful">3．一番役立った項目を教えてください<span class="required">必須</span></label>
+            <p class="subtext">記入例: 優先して直す3項目を決められたこと。何から手をつけるか整理できました。</p>
+            <textarea id="mostHelpful" name="mostHelpful"></textarea>
+            <p class="error" id="mostHelpfulError" aria-live="polite"></p>
+          </div>
+
+          <div class="field">
+            <label for="confusingParts">4．入力に迷った項目、分かりにくかった部分はありましたか？</label>
+            <textarea id="confusingParts" name="confusingParts"></textarea>
+          </div>
+
+          <div class="field">
+            <label for="wantedFeatures">5．次のツールに欲しい機能を教えてください</label>
+            <p class="subtext">次は「自分の経験と知識を、note記事の設計図に変えるツール」を検討しています。</p>
+            <textarea id="wantedFeatures" name="wantedFeatures"></textarea>
+          </div>
+
+          <fieldset class="field">
+            <legend>6．感想を今後の記事で紹介してもよいですか？<span class="required">必須</span></legend>
+            <div class="choice-group" id="publicationPermissionGroup">
+              <label class="choice" for="permission-ok">
+                <input id="permission-ok" name="publicationPermission" type="radio" value="匿名なら掲載してよい" />
+                <span>匿名なら掲載してよい</span>
+              </label>
+              <label class="choice" for="permission-no">
+                <input id="permission-no" name="publicationPermission" type="radio" value="掲載しないでほしい" />
+                <span>掲載しないでほしい</span>
+              </label>
+            </div>
+            <p class="error" id="publicationPermissionError" aria-live="polite"></p>
+          </fieldset>
+
+          <div class="field">
+            <label for="name">7．お名前・ハンドルネーム</label>
+            <input id="name" name="name" type="text" autocomplete="name" />
+          </div>
+
+          <div class="field">
+            <label for="email">8．返信先メールアドレス</label>
+            <input id="email" name="email" type="email" autocomplete="email" inputmode="email" />
+          </div>
+
+          <div class="actions">
+            <div class="action-buttons">
+              <button class="primary" type="button" id="gmailButton">Gmailで内容を送る</button>
+              <button class="secondary" type="button" id="mailtoButton">メールアプリで送る</button>
+              <button class="tertiary" type="button" id="copyButton">回答内容をコピー</button>
+            </div>
+            <p id="actionStatus" class="status-box" aria-live="polite"></p>
+          </div>
+        </form>
+      </section>
+
+      <p class="footer">
+        <a href="./">有料note改善ナビに戻る</a>
+      </p>
+    </main>
+
+    <script>
+      const FEEDBACK_EMAIL = "bkdsq192@gmail.com";
+      const FEEDBACK_SUBJECT = "無料ツールの感想｜有料note改善ナビ";
+
+      const form = document.getElementById("feedbackForm");
+      const actionStatus = document.getElementById("actionStatus");
+      const fieldErrorElements = {
+        usedTools: document.getElementById("usedToolsError"),
+        progress: document.getElementById("progressError"),
+        mostHelpful: document.getElementById("mostHelpfulError"),
+        publicationPermission: document.getElementById("publicationPermissionError"),
+      };
+
+      function clean(value) {
+        return typeof value === "string" ? value.trim() : "";
+      }
+
+      function getValues() {
+        const usedTools = Array.from(form.querySelectorAll('input[name="usedTools"]:checked')).map((input) => input.value);
+        const progress = form.querySelector('input[name="progress"]:checked')?.value || "";
+        const publicationPermission = form.querySelector('input[name="publicationPermission"]:checked')?.value || "";
+
+        return {
+          usedTools,
+          progress,
+          mostHelpful: form.mostHelpful.value,
+          confusingParts: form.confusingParts.value,
+          wantedFeatures: form.wantedFeatures.value,
+          publicationPermission,
+          name: form.name.value,
+          email: form.email.value,
+        };
+      }
+
+      function validate(values) {
+        const errors = {};
+
+        if (values.usedTools.length === 0) {
+          errors.usedTools = "使ったツールを1つ以上選んでください。";
+        }
+
+        if (!clean(values.progress)) {
+          errors.progress = "どこまで進められたかを選んでください。";
+        }
+
+        if (!clean(values.mostHelpful)) {
+          errors.mostHelpful = "一番役立った項目を入力してください。";
+        }
+
+        if (!clean(values.publicationPermission)) {
+          errors.publicationPermission = "感想の掲載可否を選んでください。";
+        }
+
+        return {
+          isValid: Object.keys(errors).length === 0,
+          errors,
+        };
+      }
+
+      function fillOptional(value) {
+        return clean(value) || "特になし";
+      }
+
+      function fillOptionalIdentity(value) {
+        return clean(value) || "未記入";
+      }
+
+      function buildBody(values) {
+        return [
+          "無料ツールの感想",
+          "",
+          "【使ったツール】",
+          values.usedTools.join(" / "),
+          "",
+          "【どこまで進められましたか】",
+          clean(values.progress),
+          "",
+          "【一番役立った項目】",
+          clean(values.mostHelpful),
+          "",
+          "【入力に迷った項目、分かりにくかった部分】",
+          fillOptional(values.confusingParts),
+          "",
+          "【次のツールに欲しい機能】",
+          fillOptional(values.wantedFeatures),
+          "",
+          "【感想を今後の記事で紹介してよいか】",
+          clean(values.publicationPermission),
+          "",
+          "【お名前・ハンドルネーム】",
+          fillOptionalIdentity(values.name),
+          "",
+          "【返信先メールアドレス】",
+          fillOptionalIdentity(values.email),
+        ].join("\n");
+      }
+
+      function buildGmailUrl(values) {
+        const params = new URLSearchParams({
+          view: "cm",
+          fs: "1",
+          to: FEEDBACK_EMAIL,
+          su: FEEDBACK_SUBJECT,
+          body: buildBody(values),
+        });
+
+        return `https://mail.google.com/mail/?${params.toString()}`;
+      }
+
+      function buildMailtoUrl(values) {
+        const params = new URLSearchParams({
+          subject: FEEDBACK_SUBJECT,
+          body: buildBody(values),
+        });
+
+        return `mailto:${FEEDBACK_EMAIL}?${params.toString()}`;
+      }
+
+      function renderErrors(errors) {
+        Object.entries(fieldErrorElements).forEach(([key, element]) => {
+          element.textContent = errors[key] || "";
+        });
+      }
+
+      function setActionStatus(message, type) {
+        actionStatus.textContent = message;
+        actionStatus.className = "status-box";
+        if (type === "error") {
+          actionStatus.classList.add("is-error");
+        }
+        if (type === "success") {
+          actionStatus.classList.add("is-success");
+        }
+      }
+
+      function focusFirstError(errors) {
+        if (errors.usedTools) {
+          document.getElementById("tool-sheet").focus();
+          return;
+        }
+        if (errors.progress) {
+          document.getElementById("progress-opened").focus();
+          return;
+        }
+        if (errors.mostHelpful) {
+          document.getElementById("mostHelpful").focus();
+          return;
+        }
+        if (errors.publicationPermission) {
+          document.getElementById("permission-ok").focus();
+        }
+      }
+
+      function ensureValidValues() {
+        const values = getValues();
+        const result = validate(values);
+        renderErrors(result.errors);
+
+        if (!result.isValid) {
+          setActionStatus("必須項目を入力してから操作してください。", "error");
+          focusFirstError(result.errors);
+          return null;
+        }
+
+        setActionStatus("", "");
+        return values;
+      }
+
+      async function copyToClipboard(text) {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(text);
+          return;
+        }
+
+        const helper = document.createElement("textarea");
+        helper.value = text;
+        helper.setAttribute("readonly", "");
+        helper.style.position = "fixed";
+        helper.style.top = "-9999px";
+        document.body.appendChild(helper);
+        helper.select();
+        document.execCommand("copy");
+        document.body.removeChild(helper);
+      }
+
+      document.getElementById("gmailButton").addEventListener("click", () => {
+        const values = ensureValidValues();
+        if (!values) return;
+        window.open(buildGmailUrl(values), "_blank", "noopener");
+      });
+
+      document.getElementById("mailtoButton").addEventListener("click", () => {
+        const values = ensureValidValues();
+        if (!values) return;
+        window.location.href = buildMailtoUrl(values);
+      });
+
+      document.getElementById("copyButton").addEventListener("click", async () => {
+        const values = ensureValidValues();
+        if (!values) return;
+
+        try {
+          await copyToClipboard(buildBody(values));
+          setActionStatus("回答内容をコピーしました。メール本文の下書きにもそのまま貼り付けられます。", "success");
+        } catch {
+          setActionStatus("コピーに失敗しました。もう一度お試しください。", "error");
+        }
+      });
+
+      form.addEventListener("input", () => {
+        renderErrors({});
+        setActionStatus("", "");
+      });
+    </script>
+  </body>
+</html>
