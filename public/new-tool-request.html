@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>新ツールへの要望フォーム | 有料note改善ナビ</title>
+    <meta
+      name="description"
+      content="8月1日公開予定の新ツールに向けて、欲しい機能や困っている点を送るためのフォームです。"
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f3f9ff;
+        --card: #ffffff;
+        --line: #cfe1f5;
+        --line-strong: #8fb5db;
+        --text: #18324b;
+        --muted: #4b647c;
+        --primary: #1f6fb8;
+        --primary-strong: #175b98;
+        --primary-soft: #e7f2ff;
+        --danger: #b43b4f;
+        --danger-soft: #fff1f4;
+        --shadow: 0 18px 40px rgba(31, 70, 110, 0.08);
+        --radius: 20px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        background:
+          radial-gradient(circle at top left, rgba(132, 193, 255, 0.3), transparent 30%),
+          linear-gradient(180deg, #f7fbff 0%, var(--bg) 100%);
+        color: var(--text);
+        font-family: "Hiragino Sans", "Yu Gothic UI", "Yu Gothic", "Meiryo", sans-serif;
+        line-height: 1.7;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+      }
+
+      a {
+        color: var(--primary-strong);
+      }
+
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      textarea:focus-visible {
+        outline: 3px solid rgba(31, 111, 184, 0.35);
+        outline-offset: 2px;
+      }
+
+      .page {
+        width: min(100%, 960px);
+        margin: 0 auto;
+        padding: 24px 16px 48px;
+      }
+
+      .hero,
+      .card {
+        background: rgba(255, 255, 255, 0.94);
+        border: 1px solid rgba(207, 225, 245, 0.95);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(6px);
+      }
+
+      .hero {
+        padding: 28px;
+        margin-bottom: 20px;
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--primary);
+        font-size: 0.92rem;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+        line-height: 1.25;
+      }
+
+      .lead {
+        margin: 14px 0 0;
+        color: var(--muted);
+        font-size: 1rem;
+      }
+
+      .description {
+        margin: 18px 0 0;
+        color: var(--text);
+        font-size: 0.98rem;
+      }
+
+      .description p {
+        margin: 0 0 10px;
+      }
+
+      .description p:last-child {
+        margin-bottom: 0;
+      }
+
+      .voice-list {
+        display: grid;
+        gap: 8px;
+        margin: 14px 0;
+      }
+
+      .voice-list span {
+        display: block;
+        padding-left: 0.2em;
+        font-weight: 700;
+      }
+
+      .notice {
+        margin-top: 18px;
+        padding: 14px 16px;
+        border-radius: 16px;
+        background: var(--primary-soft);
+        border: 1px solid #bfd8f2;
+        font-size: 0.95rem;
+      }
+
+      .card {
+        padding: 24px;
+      }
+
+      form {
+        display: grid;
+        gap: 22px;
+      }
+
+      .section-title {
+        margin: 0 0 14px;
+        font-size: 1.1rem;
+      }
+
+      .field,
+      fieldset {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        min-width: 0;
+      }
+
+      label,
+      legend {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 700;
+      }
+
+      .required {
+        display: inline-block;
+        margin-left: 8px;
+        padding: 2px 8px;
+        border-radius: 999px;
+        background: var(--danger-soft);
+        color: var(--danger);
+        font-size: 0.78rem;
+        font-weight: 700;
+        vertical-align: middle;
+      }
+
+      .subtext {
+        margin: -2px 0 10px;
+        color: var(--muted);
+        font-size: 0.94rem;
+      }
+
+      .choice-group {
+        display: grid;
+        gap: 10px;
+      }
+
+      .choice-group.compact {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .choice {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 14px 16px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: #fcfeff;
+        min-width: 0;
+      }
+
+      .choice input {
+        width: 20px;
+        height: 20px;
+        margin-top: 2px;
+        accent-color: var(--primary);
+        flex: 0 0 auto;
+      }
+
+      .choice span {
+        flex: 1 1 auto;
+      }
+
+      input[type="text"],
+      textarea {
+        width: 100%;
+        min-height: 54px;
+        padding: 14px 16px;
+        border: 1px solid var(--line-strong);
+        border-radius: 16px;
+        background: #fff;
+        color: var(--text);
+        font: inherit;
+      }
+
+      textarea {
+        min-height: 140px;
+        resize: vertical;
+      }
+
+      .collapsible {
+        display: grid;
+        grid-template-rows: 0fr;
+        opacity: 0;
+        transition: grid-template-rows 0.25s ease, opacity 0.25s ease, margin-top 0.25s ease;
+        margin-top: 0;
+      }
+
+      .collapsible.is-visible {
+        grid-template-rows: 1fr;
+        opacity: 1;
+        margin-top: 10px;
+      }
+
+      .collapsible-inner {
+        overflow: hidden;
+      }
+
+      .error {
+        margin: 8px 0 0;
+        color: var(--danger);
+        font-size: 0.92rem;
+        font-weight: 700;
+      }
+
+      .actions {
+        display: grid;
+        gap: 12px;
+      }
+
+      .action-buttons {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      button {
+        min-height: 54px;
+        border: 0;
+        border-radius: 16px;
+        padding: 14px 16px;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+      }
+
+      .primary {
+        background: var(--primary);
+        color: #fff;
+        box-shadow: 0 12px 24px rgba(31, 111, 184, 0.22);
+      }
+
+      .primary:hover {
+        background: var(--primary-strong);
+      }
+
+      .secondary {
+        background: #fff;
+        color: var(--primary-strong);
+        border: 1px solid var(--line-strong);
+      }
+
+      .tertiary {
+        background: #eef6ff;
+        color: var(--primary-strong);
+      }
+
+      .status-box {
+        min-height: 28px;
+        padding-top: 2px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .status-box.is-error {
+        color: var(--danger);
+        font-weight: 700;
+      }
+
+      .status-box.is-success {
+        color: #1c6a45;
+        font-weight: 700;
+      }
+
+      .footer {
+        margin-top: 18px;
+        color: var(--muted);
+        font-size: 0.92rem;
+        text-align: center;
+      }
+
+      @media (max-width: 720px) {
+        .hero,
+        .card {
+          padding: 20px;
+        }
+
+        .choice-group.compact,
+        .action-buttons {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .page {
+          padding-inline: 12px;
+        }
+
+        .hero,
+        .card {
+          border-radius: 18px;
+          padding: 18px;
+        }
+
+        .choice {
+          padding: 12px 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero" aria-labelledby="page-title">
+        <p class="eyebrow">8月1日公開予定の新ツール向けフォーム</p>
+        <h1 id="page-title">新ツールに欲しい機能を教えてください</h1>
+        <p class="lead">自分の経験や知識を、note記事の設計図に変えるツールを作っています</p>
+        <div class="description">
+          <p>
+            8月1日に向けて、<br />
+            「自分の経験や知識を、note記事の設計図に変えるツール」<br />
+            を準備しています。
+          </p>
+          <p>基本の方向性は決めていますが、実際にnoteを書こうとしている方の声も反映したいと思っています。</p>
+          <div class="voice-list" aria-label="集めたい声の例">
+            <span>「ここで迷う」</span>
+            <span>「こういう機能があると助かる」</span>
+            <span>「AIに渡す前に、ここを整理したい」</span>
+          </div>
+          <p>と感じることがあれば、ぜひ教えてください。</p>
+          <p>回答は2〜3分で終わります。</p>
+        </div>
+        <p class="notice">
+          このページでは回答をサーバーに保存しません。入力後にGmailまたはメールアプリが開き、内容を確認してから送信できます。
+        </p>
+      </section>
+
+      <section class="card" aria-labelledby="form-title">
+        <h2 id="form-title" class="section-title">要望フォーム</h2>
+        <form id="newToolRequestForm" novalidate>
+          <fieldset class="field">
+            <legend>1．あなたがnoteを書くとき、一番止まりやすいところはどこですか？<span class="required">必須</span></legend>
+            <div class="choice-group compact" id="blockerGroup">
+              <label class="choice" for="blocker-1"><input id="blocker-1" name="blocker" type="radio" value="テーマが決まらない" /><span>テーマが決まらない</span></label>
+              <label class="choice" for="blocker-2"><input id="blocker-2" name="blocker" type="radio" value="誰に向けて書くか決まらない" /><span>誰に向けて書くか決まらない</span></label>
+              <label class="choice" for="blocker-3"><input id="blocker-3" name="blocker" type="radio" value="自分の経験をどう使えばいいか分からない" /><span>自分の経験をどう使えばいいか分からない</span></label>
+              <label class="choice" for="blocker-4"><input id="blocker-4" name="blocker" type="radio" value="タイトルが作れない" /><span>タイトルが作れない</span></label>
+              <label class="choice" for="blocker-5"><input id="blocker-5" name="blocker" type="radio" value="見出し構成が作れない" /><span>見出し構成が作れない</span></label>
+              <label class="choice" for="blocker-6"><input id="blocker-6" name="blocker" type="radio" value="ChatGPTに何を渡せばいいか分からない" /><span>ChatGPTに何を渡せばいいか分からない</span></label>
+              <label class="choice" for="blocker-other-option"><input id="blocker-other-option" name="blocker" type="radio" value="その他" /><span>その他</span></label>
+            </div>
+            <div id="blockerOtherWrap" class="collapsible" aria-hidden="true">
+              <div class="collapsible-inner">
+                <label for="blockerOther">1．止まりやすいところのその他</label>
+                <input id="blockerOther" name="blockerOther" type="text" placeholder="止まりやすいところを具体的に入力してください" />
+              </div>
+            </div>
+            <p class="error" id="blockerError" role="alert" aria-live="polite"></p>
+            <p class="error" id="blockerOtherError" role="alert" aria-live="polite"></p>
+          </fieldset>
+
+          <fieldset class="field">
+            <legend>2．新ツールにあると助かる機能を教えてください<span class="required">必須</span></legend>
+            <div class="choice-group compact" id="wantedFeaturesGroup">
+              <label class="choice" for="feature-1"><input id="feature-1" name="wantedFeatures" type="checkbox" value="自分の経験・知識を棚卸しする機能" /><span>自分の経験・知識を棚卸しする機能</span></label>
+              <label class="choice" for="feature-2"><input id="feature-2" name="wantedFeatures" type="checkbox" value="読者と悩みを整理する機能" /><span>読者と悩みを整理する機能</span></label>
+              <label class="choice" for="feature-3"><input id="feature-3" name="wantedFeatures" type="checkbox" value="noteのタイトル案を作る機能" /><span>noteのタイトル案を作る機能</span></label>
+              <label class="choice" for="feature-4"><input id="feature-4" name="wantedFeatures" type="checkbox" value="見出し構成・記事の設計図を作る機能" /><span>見出し構成・記事の設計図を作る機能</span></label>
+              <label class="choice" for="feature-5"><input id="feature-5" name="wantedFeatures" type="checkbox" value="ChatGPTへ渡す原稿作成プロンプトを作る機能" /><span>ChatGPTへ渡す原稿作成プロンプトを作る機能</span></label>
+              <label class="choice" for="feature-6"><input id="feature-6" name="wantedFeatures" type="checkbox" value="X・Threadsの投稿案を作る機能" /><span>X・Threadsの投稿案を作る機能</span></label>
+              <label class="choice" for="feature-other"><input id="feature-other" name="wantedFeatures" type="checkbox" value="その他" /><span>その他</span></label>
+            </div>
+            <div id="wantedFeaturesOtherWrap" class="collapsible" aria-hidden="true">
+              <div class="collapsible-inner">
+                <label for="wantedFeaturesOther">2．欲しい機能のその他</label>
+                <input id="wantedFeaturesOther" name="wantedFeaturesOther" type="text" placeholder="欲しい機能を具体的に入力してください" />
+              </div>
+            </div>
+            <p class="error" id="wantedFeaturesError" role="alert" aria-live="polite"></p>
+            <p class="error" id="wantedFeaturesOtherError" role="alert" aria-live="polite"></p>
+          </fieldset>
+
+          <fieldset class="field">
+            <legend>3．AIで文章を作ったとき、どんな不満がありますか？</legend>
+            <div class="choice-group compact" id="aiDissatisfactionGroup">
+              <label class="choice" for="dissatisfaction-1"><input id="dissatisfaction-1" name="aiDissatisfaction" type="checkbox" value="内容が一般論になりやすい" /><span>内容が一般論になりやすい</span></label>
+              <label class="choice" for="dissatisfaction-2"><input id="dissatisfaction-2" name="aiDissatisfaction" type="checkbox" value="自分の経験がうまく入らない" /><span>自分の経験がうまく入らない</span></label>
+              <label class="choice" for="dissatisfaction-3"><input id="dissatisfaction-3" name="aiDissatisfaction" type="checkbox" value="文章がきれいすぎて自分らしくない" /><span>文章がきれいすぎて自分らしくない</span></label>
+              <label class="choice" for="dissatisfaction-4"><input id="dissatisfaction-4" name="aiDissatisfaction" type="checkbox" value="誰向けの記事かぼやける" /><span>誰向けの記事かぼやける</span></label>
+              <label class="choice" for="dissatisfaction-5"><input id="dissatisfaction-5" name="aiDissatisfaction" type="checkbox" value="タイトルや見出しが弱い" /><span>タイトルや見出しが弱い</span></label>
+              <label class="choice" for="dissatisfaction-6"><input id="dissatisfaction-6" name="aiDissatisfaction" type="checkbox" value="最後の結論がまとまらない" /><span>最後の結論がまとまらない</span></label>
+              <label class="choice" for="dissatisfaction-none"><input id="dissatisfaction-none" name="aiDissatisfaction" type="checkbox" value="特に不満はない" /><span>特に不満はない</span></label>
+              <label class="choice" for="dissatisfaction-other"><input id="dissatisfaction-other" name="aiDissatisfaction" type="checkbox" value="その他" /><span>その他</span></label>
+            </div>
+            <div id="aiDissatisfactionOtherWrap" class="collapsible" aria-hidden="true">
+              <div class="collapsible-inner">
+                <label for="aiDissatisfactionOther">3．AI不満のその他</label>
+                <input id="aiDissatisfactionOther" name="aiDissatisfactionOther" type="text" placeholder="AIで文章を作ったときの不満を具体的に入力してください" />
+              </div>
+            </div>
+            <p class="error" id="aiDissatisfactionOtherError" role="alert" aria-live="polite"></p>
+          </fieldset>
+
+          <fieldset class="field">
+            <legend>4．新ツールで最終的に完成してほしいものは何ですか？<span class="required">必須</span></legend>
+            <div class="choice-group compact" id="finalOutputsGroup">
+              <label class="choice" for="output-1"><input id="output-1" name="finalOutputs" type="checkbox" value="note記事の設計図" /><span>note記事の設計図</span></label>
+              <label class="choice" for="output-2"><input id="output-2" name="finalOutputs" type="checkbox" value="タイトル案" /><span>タイトル案</span></label>
+              <label class="choice" for="output-3"><input id="output-3" name="finalOutputs" type="checkbox" value="見出し構成" /><span>見出し構成</span></label>
+              <label class="choice" for="output-4"><input id="output-4" name="finalOutputs" type="checkbox" value="導入文の材料" /><span>導入文の材料</span></label>
+              <label class="choice" for="output-5"><input id="output-5" name="finalOutputs" type="checkbox" value="本文に入れる経験・数字の整理" /><span>本文に入れる経験・数字の整理</span></label>
+              <label class="choice" for="output-6"><input id="output-6" name="finalOutputs" type="checkbox" value="ChatGPTへ貼るプロンプト" /><span>ChatGPTへ貼るプロンプト</span></label>
+              <label class="choice" for="output-7"><input id="output-7" name="finalOutputs" type="checkbox" value="X・Threads投稿文" /><span>X・Threads投稿文</span></label>
+              <label class="choice" for="output-other"><input id="output-other" name="finalOutputs" type="checkbox" value="その他" /><span>その他</span></label>
+            </div>
+            <div id="finalOutputsOtherWrap" class="collapsible" aria-hidden="true">
+              <div class="collapsible-inner">
+                <label for="finalOutputsOther">4．完成してほしいもののその他</label>
+                <input id="finalOutputsOther" name="finalOutputsOther" type="text" placeholder="完成してほしいものを具体的に入力してください" />
+              </div>
+            </div>
+            <p class="error" id="finalOutputsError" role="alert" aria-live="polite"></p>
+            <p class="error" id="finalOutputsOtherError" role="alert" aria-live="polite"></p>
+          </fieldset>
+
+          <div class="field">
+            <label for="freeComment">5．自由にご意見をお書きください</label>
+            <textarea
+              id="freeComment"
+              name="freeComment"
+              placeholder="例：自分の経験はあるのですが、どう記事にすればいいか分かりません。質問に答えるだけで、記事の骨組みができる機能があると助かります。"
+            ></textarea>
+          </div>
+
+          <fieldset class="field">
+            <legend>6．ご意見を今後の記事で紹介してもよいですか？<span class="required">必須</span></legend>
+            <div class="choice-group" id="publicationPermissionGroup">
+              <label class="choice" for="publication-ok"><input id="publication-ok" name="publicationPermission" type="radio" value="匿名なら紹介してよい" /><span>匿名なら紹介してよい</span></label>
+              <label class="choice" for="publication-no"><input id="publication-no" name="publicationPermission" type="radio" value="紹介しないでほしい" /><span>紹介しないでほしい</span></label>
+            </div>
+            <p class="error" id="publicationPermissionError" role="alert" aria-live="polite"></p>
+          </fieldset>
+
+          <div class="field">
+            <label for="name">7．お名前・ハンドルネーム</label>
+            <input id="name" name="name" type="text" autocomplete="name" />
+          </div>
+
+          <div class="actions">
+            <div class="action-buttons">
+              <button class="primary" type="button" id="gmailButton">Gmailで内容を送る</button>
+              <button class="secondary" type="button" id="mailtoButton">メールアプリで送る</button>
+              <button class="tertiary" type="button" id="copyButton">回答内容をコピー</button>
+            </div>
+            <p id="actionStatus" class="status-box" aria-live="polite"></p>
+          </div>
+        </form>
+      </section>
+
+      <p class="footer"><a href="./">有料note改善ナビに戻る</a></p>
+    </main>
+
+    <script>
+      const REQUEST_EMAIL = "bkdsq192@gmail.com";
+      const REQUEST_SUBJECT = "新ツールへの要望｜note記事設計ナビ";
+      const AI_DISSATISFACTION_NONE = "特に不満はない";
+
+      const form = document.getElementById("newToolRequestForm");
+      const actionStatus = document.getElementById("actionStatus");
+      const blockerOtherWrap = document.getElementById("blockerOtherWrap");
+      const wantedFeaturesOtherWrap = document.getElementById("wantedFeaturesOtherWrap");
+      const aiDissatisfactionOtherWrap = document.getElementById("aiDissatisfactionOtherWrap");
+      const finalOutputsOtherWrap = document.getElementById("finalOutputsOtherWrap");
+
+      const blockerOtherInput = document.getElementById("blockerOther");
+      const wantedFeaturesOtherInput = document.getElementById("wantedFeaturesOther");
+      const aiDissatisfactionOtherInput = document.getElementById("aiDissatisfactionOther");
+      const finalOutputsOtherInput = document.getElementById("finalOutputsOther");
+      const freeCommentInput = document.getElementById("freeComment");
+      const nameInput = document.getElementById("name");
+
+      const fieldErrorElements = {
+        blocker: document.getElementById("blockerError"),
+        blockerOther: document.getElementById("blockerOtherError"),
+        wantedFeatures: document.getElementById("wantedFeaturesError"),
+        wantedFeaturesOther: document.getElementById("wantedFeaturesOtherError"),
+        aiDissatisfactionOther: document.getElementById("aiDissatisfactionOtherError"),
+        finalOutputs: document.getElementById("finalOutputsError"),
+        finalOutputsOther: document.getElementById("finalOutputsOtherError"),
+        publicationPermission: document.getElementById("publicationPermissionError"),
+      };
+
+      function clean(value) {
+        return typeof value === "string" ? value.trim() : "";
+      }
+
+      function unique(values) {
+        return [...new Set(values.filter((value) => clean(value)))];
+      }
+
+      function normalizeExclusiveOption(values, exclusiveOption) {
+        const normalized = unique(values);
+        if (normalized.includes(exclusiveOption)) {
+          return [exclusiveOption];
+        }
+        return normalized;
+      }
+
+      function getCheckedValues(name) {
+        return Array.from(form.querySelectorAll(`input[name="${name}"]:checked`)).map((input) => input.value);
+      }
+
+      function getValues() {
+        return {
+          blocker: form.querySelector('input[name="blocker"]:checked')?.value || "",
+          blockerOther: blockerOtherInput.value,
+          wantedFeatures: getCheckedValues("wantedFeatures"),
+          wantedFeaturesOther: wantedFeaturesOtherInput.value,
+          aiDissatisfaction: getCheckedValues("aiDissatisfaction"),
+          aiDissatisfactionOther: aiDissatisfactionOtherInput.value,
+          finalOutputs: getCheckedValues("finalOutputs"),
+          finalOutputsOther: finalOutputsOtherInput.value,
+          freeComment: freeCommentInput.value,
+          publicationPermission: form.querySelector('input[name="publicationPermission"]:checked')?.value || "",
+          name: nameInput.value,
+        };
+      }
+
+      function validate(values) {
+        const errors = {};
+
+        if (!clean(values.blocker)) {
+          errors.blocker = "noteを書くときに止まりやすいところを選択してください。";
+        }
+        if (values.blocker === "その他" && !clean(values.blockerOther)) {
+          errors.blockerOther = "その他の内容を入力してください。";
+        }
+        if (unique(values.wantedFeatures).length === 0) {
+          errors.wantedFeatures = "新ツールにあると助かる機能を1つ以上選択してください。";
+        }
+        if (unique(values.wantedFeatures).includes("その他") && !clean(values.wantedFeaturesOther)) {
+          errors.wantedFeaturesOther = "その他の内容を入力してください。";
+        }
+        if (unique(values.aiDissatisfaction).includes("その他") && !clean(values.aiDissatisfactionOther)) {
+          errors.aiDissatisfactionOther = "その他の内容を入力してください。";
+        }
+        if (unique(values.finalOutputs).length === 0) {
+          errors.finalOutputs = "新ツールで完成してほしいものを1つ以上選択してください。";
+        }
+        if (unique(values.finalOutputs).includes("その他") && !clean(values.finalOutputsOther)) {
+          errors.finalOutputsOther = "その他の内容を入力してください。";
+        }
+        if (!clean(values.publicationPermission)) {
+          errors.publicationPermission = "ご意見の掲載可否を選択してください。";
+        }
+
+        return {
+          isValid: Object.keys(errors).length === 0,
+          errors,
+        };
+      }
+
+      function formatOtherAwareSingle(selected, otherText) {
+        if (!clean(selected)) return "特になし";
+        if (selected === "その他") return `その他：${clean(otherText) || "未記入"}`;
+        return selected;
+      }
+
+      function formatOtherAwareMultiple(selectedValues, otherText, exclusiveOption) {
+        const normalized = exclusiveOption ? normalizeExclusiveOption(selectedValues, exclusiveOption) : unique(selectedValues);
+        if (normalized.length === 0) return "特になし";
+        return normalized.map((value) => (value === "その他" ? `その他：${clean(otherText) || "未記入"}` : value)).join("\n");
+      }
+
+      function buildBody(values) {
+        return [
+          "新ツールへの要望フォーム",
+          "",
+          "1．noteを書くとき、一番止まりやすいところ",
+          formatOtherAwareSingle(values.blocker, values.blockerOther),
+          "",
+          "2．新ツールにあると助かる機能",
+          formatOtherAwareMultiple(values.wantedFeatures, values.wantedFeaturesOther),
+          "",
+          "3．AIで文章を作ったときの不満",
+          formatOtherAwareMultiple(values.aiDissatisfaction, values.aiDissatisfactionOther, AI_DISSATISFACTION_NONE),
+          "",
+          "4．新ツールで最終的に完成してほしいもの",
+          formatOtherAwareMultiple(values.finalOutputs, values.finalOutputsOther),
+          "",
+          "5．自由意見",
+          clean(values.freeComment) || "特になし",
+          "",
+          "6．意見の掲載可否",
+          clean(values.publicationPermission) || "未記入",
+          "",
+          "7．お名前・ハンドルネーム",
+          clean(values.name) || "匿名",
+        ].join("\n");
+      }
+
+      function buildGmailUrl(values) {
+        const params = new URLSearchParams({
+          view: "cm",
+          fs: "1",
+          to: REQUEST_EMAIL,
+          su: REQUEST_SUBJECT,
+          body: buildBody(values),
+        });
+        return `https://mail.google.com/mail/?${params.toString()}`;
+      }
+
+      function buildMailtoUrl(values) {
+        const params = new URLSearchParams({
+          subject: REQUEST_SUBJECT,
+          body: buildBody(values),
+        });
+        return `mailto:${REQUEST_EMAIL}?${params.toString()}`;
+      }
+
+      function renderErrors(errors) {
+        Object.entries(fieldErrorElements).forEach(([key, element]) => {
+          element.textContent = errors[key] || "";
+        });
+      }
+
+      function setActionStatus(message, type) {
+        actionStatus.textContent = message;
+        actionStatus.className = "status-box";
+        if (type === "error") actionStatus.classList.add("is-error");
+        if (type === "success") actionStatus.classList.add("is-success");
+      }
+
+      function setCollapsibleVisible(element, isVisible) {
+        element.classList.toggle("is-visible", isVisible);
+        element.setAttribute("aria-hidden", String(!isVisible));
+      }
+
+      function syncConditionalFields(options = {}) {
+        const {
+          focusBlockerOther = false,
+          focusWantedFeaturesOther = false,
+          focusAiDissatisfactionOther = false,
+          focusFinalOutputsOther = false,
+        } = options;
+
+        const blockerIsOther = document.getElementById("blocker-other-option").checked;
+        const wantedFeaturesIsOther = document.getElementById("feature-other").checked;
+        const aiDissatisfactionIsOther = document.getElementById("dissatisfaction-other").checked;
+        const finalOutputsIsOther = document.getElementById("output-other").checked;
+
+        setCollapsibleVisible(blockerOtherWrap, blockerIsOther);
+        setCollapsibleVisible(wantedFeaturesOtherWrap, wantedFeaturesIsOther);
+        setCollapsibleVisible(aiDissatisfactionOtherWrap, aiDissatisfactionIsOther);
+        setCollapsibleVisible(finalOutputsOtherWrap, finalOutputsIsOther);
+
+        if (focusBlockerOther && blockerIsOther) blockerOtherInput.focus();
+        if (focusWantedFeaturesOther && wantedFeaturesIsOther) wantedFeaturesOtherInput.focus();
+        if (focusAiDissatisfactionOther && aiDissatisfactionIsOther) aiDissatisfactionOtherInput.focus();
+        if (focusFinalOutputsOther && finalOutputsIsOther) finalOutputsOtherInput.focus();
+      }
+
+      function handleAiDissatisfactionExclusive(target) {
+        const noneCheckbox = document.getElementById("dissatisfaction-none");
+        const otherCheckboxes = Array.from(form.querySelectorAll('input[name="aiDissatisfaction"]')).filter((input) => input !== noneCheckbox);
+
+        if (target === noneCheckbox && noneCheckbox.checked) {
+          otherCheckboxes.forEach((input) => {
+            input.checked = false;
+          });
+        }
+
+        if (target !== noneCheckbox && target.checked) {
+          noneCheckbox.checked = false;
+        }
+      }
+
+      function focusFirstError(errors) {
+        if (errors.blocker) return document.getElementById("blocker-1").focus();
+        if (errors.blockerOther) return blockerOtherInput.focus();
+        if (errors.wantedFeatures) return document.getElementById("feature-1").focus();
+        if (errors.wantedFeaturesOther) return wantedFeaturesOtherInput.focus();
+        if (errors.aiDissatisfactionOther) return aiDissatisfactionOtherInput.focus();
+        if (errors.finalOutputs) return document.getElementById("output-1").focus();
+        if (errors.finalOutputsOther) return finalOutputsOtherInput.focus();
+        if (errors.publicationPermission) return document.getElementById("publication-ok").focus();
+      }
+
+      function ensureValidValues() {
+        const values = getValues();
+        const result = validate(values);
+        renderErrors(result.errors);
+
+        if (!result.isValid) {
+          setActionStatus("必須項目や入力内容を確認してから操作してください。", "error");
+          syncConditionalFields();
+          focusFirstError(result.errors);
+          return null;
+        }
+
+        setActionStatus("", "");
+        return values;
+      }
+
+      async function copyToClipboard(text) {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(text);
+          return;
+        }
+        const helper = document.createElement("textarea");
+        helper.value = text;
+        helper.setAttribute("readonly", "");
+        helper.style.position = "fixed";
+        helper.style.top = "-9999px";
+        document.body.appendChild(helper);
+        helper.select();
+        document.execCommand("copy");
+        document.body.removeChild(helper);
+      }
+
+      document.querySelectorAll('input[name="blocker"]').forEach((input) => {
+        input.addEventListener("change", (event) => {
+          syncConditionalFields({ focusBlockerOther: event.target.value === "その他" });
+        });
+      });
+
+      document.querySelectorAll('input[name="wantedFeatures"]').forEach((input) => {
+        input.addEventListener("change", (event) => {
+          syncConditionalFields({ focusWantedFeaturesOther: event.target.id === "feature-other" && event.target.checked });
+        });
+      });
+
+      document.querySelectorAll('input[name="aiDissatisfaction"]').forEach((input) => {
+        input.addEventListener("change", (event) => {
+          handleAiDissatisfactionExclusive(event.target);
+          syncConditionalFields({ focusAiDissatisfactionOther: event.target.id === "dissatisfaction-other" && event.target.checked });
+        });
+      });
+
+      document.querySelectorAll('input[name="finalOutputs"]').forEach((input) => {
+        input.addEventListener("change", (event) => {
+          syncConditionalFields({ focusFinalOutputsOther: event.target.id === "output-other" && event.target.checked });
+        });
+      });
+
+      document.getElementById("gmailButton").addEventListener("click", () => {
+        const values = ensureValidValues();
+        if (!values) return;
+        window.open(buildGmailUrl(values), "_blank", "noopener");
+      });
+
+      document.getElementById("mailtoButton").addEventListener("click", () => {
+        const values = ensureValidValues();
+        if (!values) return;
+        window.location.href = buildMailtoUrl(values);
+      });
+
+      document.getElementById("copyButton").addEventListener("click", async () => {
+        const values = ensureValidValues();
+        if (!values) return;
+        try {
+          await copyToClipboard(buildBody(values));
+          setActionStatus("回答内容をコピーしました。メール本文の下書きにもそのまま貼り付けられます。", "success");
+        } catch {
+          setActionStatus("コピーに失敗しました。もう一度お試しください。", "error");
+        }
+      });
+
+      form.addEventListener("input", () => {
+        renderErrors({});
+        setActionStatus("", "");
+      });
+
+      syncConditionalFields();
+    </script>
+  </body>
+</html>
