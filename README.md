@@ -1,13 +1,16 @@
-﻿# yuryo-note-kaizen-navi
+# yuryo-note-kaizen-navi
 
 A static React + TypeScript + Vite web app for reviewing and improving a paid note product page.
-It helps users整理 the title, free section, paid section, X / Threads lead flow, and a 7-day improvement plan.
+It helps users organize the title, free section, paid section, X / Threads lead flow, and a 7-day improvement plan.
 
 ## Public URLs
-- GitHub Pages URL: `https://<GitHub-username>.github.io/yuryo-note-kaizen-navi/`
+- Vercel production URL: `https://<your-vercel-domain>/`
+- Feedback form URL: `https://<your-vercel-domain>/feedback.html`
+- New tool request URL: `https://<your-vercel-domain>/new-tool-request.html`
 - GitHub repository URL: `https://github.com/<GitHub-username>/yuryo-note-kaizen-navi`
+- Legacy GitHub Pages URL: `https://<GitHub-username>.github.io/yuryo-note-kaizen-navi/`
 
-Replace `<GitHub-username>` with your actual GitHub username after publishing.
+Replace placeholders with the actual domain after deployment.
 
 ## Features
 - Static frontend app built with React, TypeScript, and Vite
@@ -16,9 +19,10 @@ Replace `<GitHub-username>` with your actual GitHub username after publishing.
 - JSON export / import for backup and restore
 - Auto-save and resume from the last step
 - Final design sheet output for copy / print
+- Static companion pages: `feedback.html` and `new-tool-request.html`
 
 ## Important notes
-- This site is published as a public GitHub Pages URL. Anyone who knows the URL can access it.
+- This site is published as a public URL. Anyone who knows the URL can access it.
 - Login, purchase verification, and buyer authentication are not implemented.
 - Do not include passwords, API keys, personal information, buyer lists, private URLs, or payment information in this repository.
 - Do not add fake frontend-only access control and treat it as real protection.
@@ -41,41 +45,44 @@ npm run build
 
 Build output is generated in `dist/`.
 
-## GitHub Pages deployment
-### 1. Create a repository
-Create a public GitHub repository named `yuryo-note-kaizen-navi`.
-Use `main` as the default branch.
+## Vercel deployment
+### 1. Import the repository into Vercel
+1. Sign in to Vercel.
+2. Click `Add New...`.
+3. Choose `Project`.
+4. Import `bkdsq192-dev/yuryo-note-kaizen-navi`.
 
-### 2. Add remote and push
-```bash
-git remote add origin https://github.com/<GitHub-username>/yuryo-note-kaizen-navi.git
-git push -u origin main
-```
+### 2. Confirm the build settings
+Use these values if Vercel does not auto-detect them:
+- Framework Preset: `Vite`
+- Install Command: `npm ci`
+- Build Command: `npm run build`
+- Output Directory: `dist`
 
-### 3. Enable GitHub Pages from GitHub Actions
-Open:
-- `Settings`
-- `Pages`
-- `Build and deployment`
-- `Source`
-- select `GitHub Actions`
+This repository also includes `vercel.json` with the same settings.
 
-### 4. Auto deploy
-Push to `main` to trigger `.github/workflows/deploy.yml`.
-The workflow runs:
-- `npm ci`
-- `npm test`
-- `npm run build`
-- GitHub Pages deploy
+### 3. Deploy
+Click `Deploy`.
+After the first deploy, Vercel will automatically rebuild on pushes to `main` if the repository is connected.
 
-Future updates are automatically re-published when you push to `main`.
+### 4. Optional custom domain
+After deployment:
+1. Open the Vercel project.
+2. Go to `Settings`.
+3. Open `Domains`.
+4. Add your preferred domain if needed.
 
-## Vite base path
-GitHub Pages repository name is controlled in two places:
-- `vite.config.ts`
-- `.github/workflows/deploy.yml` via `GITHUB_PAGES_REPOSITORY`
+## Environment and base path
+- Default app base path is `/`, which works for Vercel production and preview deployments.
+- If you need to serve the app under a subpath, set `APP_BASE_PATH` before running `npm run build`.
+- Example: `APP_BASE_PATH=/yuryo-note-kaizen-navi/ npm run build`
 
-If you rename the repository later, update both values to the new repository name.
+## GitHub Pages compatibility
+This repository still contains `.github/workflows/deploy.yml` for the existing GitHub Pages site.
+If you keep using GitHub Pages, set:
+- `APP_BASE_PATH=/<repository-name>/`
+
+The existing Pages workflow in this repository already exports that variable for the current repository path.
 
 ## Storage behavior
 - Input data is saved to browser `localStorage`

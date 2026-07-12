@@ -7,8 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  GITHUB_PAGES: "true"
-  GITHUB_PAGES_REPOSITORY: "yuryo-note-kaizen-navi"
+  APP_BASE_PATH: "/yuryo-note-kaizen-navi/"
 
 permissions:
   contents: read
